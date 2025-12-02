@@ -40,9 +40,8 @@ public class App {
                 "FROM film\n" +
                 "JOIN film_actor ON film_actor.film_id = film.film_id\n" +
                 "JOIN actor ON film_actor.actor_id = actor.actor_id\n" +
-                "WHERE actor.first_name + \" \" + actor.last_name = ?;")) {
+                "WHERE actor.first_name = \"Uma\" AND actor.last_name = \"Wood\";")) {
 
-            preparedStatement.setString(1, query);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
