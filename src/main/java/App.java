@@ -5,11 +5,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class App {
 
     private static final String[] USER_INFO = {"root", "yearup"};
     private static final String DB_URL = "jdbc:mysql://localhost:3306/sakila";
+    private static DataManager dataManager;
 
     public static void main(String[] args) {
         try (BasicDataSource dataSource = new BasicDataSource()) {
@@ -17,16 +19,13 @@ public class App {
             dataSource.setUsername(USER_INFO[0]);
             dataSource.setPassword(USER_INFO[1]);
 
-            String userInput = "Cage";
+            dataManager = new DataManager(dataSource);
 
-            queryActorLastName(dataSource, userInput);
+            String name = "Uma";
 
-            userInput = "Uma";
-            String query = userInput + " ";
-            userInput = "Wood";
-            query = query + userInput;
+            ArrayList<Actor> actors = dataManager.getActor(name);
 
-            queryFilmsByActorName(dataSource, query);
+            actors.forEach(System.out::println);
 
         } catch (SQLException e) {
             System.err.println("An error occurred: " + e);
